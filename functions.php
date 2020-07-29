@@ -23,12 +23,17 @@ function shoreditchwpworkarounds_body_class( $classes ) {
   $path = CRM_Utils_System::getUrlPath();
   $item = CRM_Core_Menu::get($path);
 
-  if (empty(CRM_Utils_Request::retrieveValue('snippet', 'String'))) {
-    $path = CRM_Utils_System::getUrlPath();
-    $item = CRM_Core_Menu::get($path);
-    $classname = 'page-' . strtr($item['path'], '/', '-');
+  if (!empty($item) && empty(CRM_Utils_Request::retrieveValue('snippet', 'String'))) {
+    $items = explode('/', $item['path']);
+    $cnt = count($items);
 
-    return "$classes $classname page-civicrm";
+    $newclasses = [
+      'page-civicrm',
+      'page-' . implode('-', array_slice($items, 0, 2)),
+      'page-' . implode('-', array_slice($items, 0, 3)),
+    ];
+
+    return "$classes " . implode(' ', $newclasses);
   }
 
   return "$classes";
