@@ -20,7 +20,7 @@ add_filter( 'admin_body_class', 'shoreditchwpworkarounds_body_class' );
 function shoreditchwpworkarounds_body_class( $classes ) {
 
   civicrm_initialize();
-  $path = CRM_Utils_System::getUrlPath();
+  $path = CRM_Utils_System::currentPath();
   $item = CRM_Core_Menu::get($path);
 
   if (!empty($item) && empty(CRM_Utils_Request::retrieveValue('snippet', 'String'))) {
